@@ -43,4 +43,43 @@ defmodule Exceptional.Control do
       end
     end
   end
+
+  @doc ~S"""
+  Alias for `Exceptional.Control.branch`
+
+  ## Examples
+
+      iex> use Exceptional.Control
+      ...> if_exception 1, do: fn ex -> ex end.(), else: fn v -> v + 1 end.()
+      2
+
+      iex> use Exceptional.Control
+      ...> if_exception ArgumentError.exception("error message") do
+      ...>   fn %{message: msg} -> msg end.()
+      ...> else
+      ...>   fn v -> v end.()
+      ...> end
+      "error message"
+
+
+      iex> use Exceptional.Control
+      ...> ArgumentError.exception("error message")
+      ...> |> if_exception do
+      ...>   fn %{message: msg} -> msg end.()
+      ...> else
+      ...>   fn v -> v end.()
+      ...> end
+      "error message"
+
+  """
+  defmacro if_exception(maybe_exception, do: exception_do, else: value_do) do
+    quote do
+      maybe_exc = unquote(maybe_exception)
+      if Exception.exception?(maybe_exc) do
+        maybe_exc |> unquote(exception_do)
+      else
+        maybe_exc |> unquote(value_do)
+      end
+    end
+  end
 end
