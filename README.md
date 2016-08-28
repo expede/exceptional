@@ -122,9 +122,6 @@ Exceptional.Control.branch 1,
 #=> 2
 
 ArgumentError.exception("error message"),
-|> Exceptional.Control.branch(
-  value_do: fn v -> v end.(),
-  exception_do: fn %{message: msg} -> msg end.()
-)
+|> Exceptional.Control.branch(value_do: fn v -> v end.(), exception_do: fn %{message: msg} -> msg end.())
 #=> "error message"
 ```
