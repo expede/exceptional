@@ -1,7 +1,19 @@
 defmodule Exceptional do
-  @moduledoc "Top-level `use` aliases"
+  @moduledoc ~S"""
+  Top-level `use` aliases"
 
-  defmacro __using__(:pipe) do
+  In almost all cases, you want:
+
+      use Exceptional
+
+  If you like to live extremely dangerously. This is _not recommended_.
+  Please be certain that you want to override the standard lib before using.
+
+      use Exceptional, :overload_pipe
+
+  """
+
+  defmacro __using__(:overload_pipe) do
     quote do
       use Exceptional.Pipe
       use Exceptional
