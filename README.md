@@ -53,3 +53,78 @@ their Elixir code, as understanding it requires some theoretical understanding.
 but in a more Elixir-y way. This is less powerful than the monad solution, but simpler to
 understand fully, and cleaner than optimistic flow, and arguably more convenient than the
 classic tagged status.
+
+## Examples
+
+### [Exception or Value](https://hexdocs.pm/exceptional/Exceptional.Value.html)
+
+```elixir
+1 ~> fn value -> value * 100 end.()
+#=> 100
+
+Enum.OutOfBoundsError.exception("exception") ~> fn x -> x + 1 end.()
+#=> %Enum.OutOfBoundsError{message: "exception"}
+
+[1,2,3]
+|> hypothetical_returns_exception
+~> fn would_be_list ->
+  would_be_list
+  |> Enum.map(fn x -> x + 1 end)
+end.()
+#=> %Enum.OutOfBoundsError{message: "exception"}
+
+0..10
+|> Enum.take(3)
+~> fn list ->
+  list
+  |> Enum.map(fn x -> x + 1 end)
+end.()
+#=> [1,2,3]
+```
+
+### [Tagged Status](https://hexdocs.pm/exceptional/Exceptional.TaggedStatus.html)
+
+```elixir
+[1,2,3]
+|> hypothetical_returns_exception
+~> fn would_be_list ->
+  would_be_list
+  |> Enum.map(fn x -> x + 1 end)
+end.()
+#=>  {:error, "exception"}
+
+0..10
+|> Enum.take(3)
+~> fn list ->
+  list
+  |> Enum.map(fn x -> x + 1 end)
+end.()
+|> to_tagged_status
+#=> {:ok, [1,2,3]}
+```
+
+### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)
+
+```elixir
+1 >>> fn x -> x + 1 end.()
+#=> 2
+
+%ArgumentError{message: "raise me"} >>> fn x -> x + 1 end.()
+#=> ** (ArgumentError) raise me
+```
+
+### Write Your Own with [Control](https://hexdocs.pm/exceptional/Exceptional.Control.html)
+
+```elixir
+Exceptional.Control.branch 1,
+  value_do: fn v -> v + 1 end.(),
+  exception_do: fn ex -> ex end.()
+#=> 2
+
+ArgumentError.exception("error message"),
+|> Exceptional.Control.branch(
+  value_do: fn v -> v end.(),
+  exception_do: fn %{message: msg} -> msg end.()
+)
+#=> "error message"
+```
