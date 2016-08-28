@@ -1,12 +1,14 @@
 defmodule Exceptional do
-  defmacro __using__(opts) do
-    use Exceptional.{Control, Raise, TaggedStatus}
+  defmacro __using__(:pipe) do
+    quote do
+      use Exceptional.Pipe
+      use Exceptional
+    end
+  end
 
-    opts
-    |> List.wrap
-    |> Enum.each fn opt ->
-      module = opt |> to_string |> Macro.camelize
-      use Module.concat(__MODULE__, module)
+  defmacro __using__(_) do
+    quote do
+      import Exceptional.{Value, Raise, TaggedStatus}
     end
   end
 end

@@ -1,21 +1,21 @@
 defmodule Exceptional.Control do
+  @defmodule "Internal module for control flow"
 
   defmacro __using__(_) do
-    require __MODULE__
-    import __MODULE__
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__)
+    end
   end
 
-  defdelegate value ~> continue, to: :exception_or_continue
-
-  @doc ~S"""
-  If an exception, return the exception, otherwise continue computation.
-  Essentially an `Either` construct for `Exception`s.
-  """
-  @spec exception_or_continue(Exception.t | any, fun) :: Exception.t | any
-  defmacro value_or_exception(check_value, continue) do
+  defmacro branch(maybe_exception, [value_do: value_do, exception_do: exception_do]) do
     quote do
-      value = unquote(check_value)
-      if Exception.exception?(value), do: value, else: value |> unquote(continue)
+      maybe_exc = unquote(maybe_exception)
+      if Exception.exception?(maybe_exc) do
+        maybe_exc |> unquote(exception_do)
+      else
+        maybe_exc |> unquote(value_do)
+      end
     end
   end
 end

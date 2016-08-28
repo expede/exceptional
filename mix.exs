@@ -6,13 +6,7 @@ defmodule Exceptional.Mixfile do
     [
       app:     :exceptional,
       name:    "Exceptional",
-
-      description: "Common combinators for Elixir",
-      package: [
-        maintainers: ["Brooklyn Zelenka"],
-        licenses: ["MIT"],
-        links: %{"GitHub" => "https://github.com/expede/exceptional"}
-      ],
+      description: "Helpers for Elixir exceptions",
 
       version: "0.1.0",
       elixir:  "~> 1.3",
@@ -20,17 +14,27 @@ defmodule Exceptional.Mixfile do
       source_url:   "https://github.com/expede/exceptional",
       homepage_url: "https://github.com/expede/exceptional",
 
+      package: [
+        maintainers: ["Brooklyn Zelenka"],
+        licenses: ["MIT"],
+        links: %{"GitHub" => "https://github.com/expede/exceptional"}
+      ],
+
+      aliases: ["quality": ["test", "credo --strict"]],
+
       build_embedded:  Mix.env == :prod,
       start_permanent: Mix.env == :prod,
 
       deps: [
+        {:quark,   "~> 1.0"},
+        {:credo,   "~> 0.4",  only: [:dev, :test]},
         {:earmark, "~> 1.0",  only: :dev},
         {:ex_doc,  "~> 0.13", only: :dev},
         {:inch_ex, "~> 0.5",  only: :docs}
       ],
 
       docs: [
-        logo: "./logo.png",
+        logo: "./branding/logo.png",
         extras: ["README.md"]
       ]
     ]

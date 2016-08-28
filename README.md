@@ -1,4 +1,5 @@
 # Exceptional: Helpers for Elixir exceptions
+![](./branding/logo_with_text.png)
 
 ## Installation
 
