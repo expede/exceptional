@@ -59,10 +59,10 @@ classic tagged status.
 ### [Exception or Value](https://hexdocs.pm/exceptional/Exceptional.Value.html)
 
 ```elixir
-1 ~> fn value -> value * 100 end.()
-#=> 100
+[1,2,3] ~> Enum.sum
+#=> 6
 
-Enum.OutOfBoundsError.exception("exception") ~> fn x -> x + 1 end.()
+Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 [1,2,3]
@@ -109,10 +109,10 @@ end.()
 ### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)
 
 ```elixir
-1 >>> fn x -> x + 1 end.()
+[1,2,3] >>> Enum.sum
 #=> 2
 
-%ArgumentError{message: "raise me"} >>> fn x -> x + 1 end.()
+%ArgumentError{message: "raise me"} >>> Enum.sum
 #=> ** (ArgumentError) raise me
 ```
 
