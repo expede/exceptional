@@ -1,5 +1,5 @@
 # Exceptional: Helpers for Elixir exceptions
-![](./branding/logo_with_text.png)
+![](https://github.com/expede/exceptional/raw/master/branding/logo_with_text.png)
 
 ## Installation
 
