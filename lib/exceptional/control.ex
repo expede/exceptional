@@ -1,5 +1,5 @@
 defmodule Exceptional.Control do
-  @defmodule "Internal module for control flow"
+  @moduledoc "Exception control flow"
 
   defmacro __using__(_) do
     quote do
@@ -8,6 +8,31 @@ defmodule Exceptional.Control do
     end
   end
 
+  @doc ~S"""
+  Branch on if the value is an `Exception`, applying the associated function for
+  that case. Does not catch thrown exceptions.
+
+  ## Examples
+
+      iex> use Exceptional.Control
+      ...> branch 1,
+      ...>   value_do: fn v -> v + 1 end.(),
+      ...>   exception_do: fn ex -> ex end.()
+      2
+
+      iex> use Exceptional.Control
+      ...> branch ArgumentError.exception("error message"),
+      ...>   value_do: fn v -> v end.(),
+      ...>   exception_do: fn %{message: msg} -> msg end.()
+      "error message"
+
+      iex> use Exceptional.Control
+      ...> branch Enum.fetch!([], 99),
+      ...>   value_do: fn v -> v + 1 end.(),
+      ...>   exception_do: fn ex -> ex end.()
+      ** (Enum.OutOfBoundsError) out of bounds error
+
+  """
   defmacro branch(maybe_exception, [value_do: value_do, exception_do: exception_do]) do
     quote do
       maybe_exc = unquote(maybe_exception)

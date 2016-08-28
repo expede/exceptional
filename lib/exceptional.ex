@@ -1,4 +1,6 @@
 defmodule Exceptional do
+  @moduledoc "Top-level `use` aliases"
+
   defmacro __using__(:pipe) do
     quote do
       use Exceptional.Pipe
@@ -8,7 +10,7 @@ defmodule Exceptional do
 
   defmacro __using__(_) do
     quote do
-      import Exceptional.{Value, Raise, TaggedStatus}
+      import Exceptional.{Value, Raise, Rescue, TaggedStatus}
     end
   end
 end

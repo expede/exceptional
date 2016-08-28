@@ -1,9 +1,10 @@
 defmodule Exceptional.Value do
+  @moduledoc "Provide an escape hatch for propagating unraised exceptions"
 
   defmacro __using__(_) do
     quote do
       require unquote(__MODULE__)
-      import unquote(__MODULE__), only: [~>: 2]
+      import unquote(__MODULE__)
     end
   end
 
@@ -19,30 +20,31 @@ defmodule Exceptional.Value do
       iex> 1 |> exception_or_continue(fn value -> value * 100 end.())
       100
 
-      iex> exception = %Enum.OutOfBoundsError{message: "exception"}
-      ...> exception |> exception_or_continue(fn value -> value * 100 end.())
-      %Enum.OutOfBoundsError{message: "exception"}
+      iex> %ArgumentError{message: "exception handled"}
+      ...> |> exception_or_continue(fn value -> value * 100 end.())
+      %ArgumentError{message: "exception handled"}
 
-      ...> exception
+      iex> %ArgumentError{message: "exception handled"}
       ...> |> exception_or_continue(fn x -> x + 1 end.())
       ...> |> exception_or_continue(fn y -> y - 10 end.())
-      %Enum.OutOfBoundsError{message: "exception"}
+      %ArgumentError{message: "exception handled"}
 
-      ...> raise(exception) |> exception_or_continue(fn value -> value * 100 end.())
-      ** (Enum.OutOfBoundsError) out of bounds error
+      iex> %ArgumentError{message: "exception not caught"}
+      ...> |> raise
+      ...> |> exception_or_continue(fn value -> value * 100 end.())
+      ** (ArgumentError) exception not caught
 
-      iex> Enum.fetch!([], 9) |> exception_or_continue(fn value -> value * 100 end.())
+      iex> Enum.fetch!([], 9) |> exception_or_continue(fn v -> v * 10 end.())
       ** (Enum.OutOfBoundsError) out of bounds error
 
   """
   @spec exception_or_continue(Exception.t | any, fun) :: Exception.t | any
   defmacro exception_or_continue(maybe_exception, continue) do
     quote do
-      use Exceptional.Control
-
+      require Exceptional.Control
       Exceptional.Control.branch unquote(maybe_exception),
         value_do: unquote(continue),
-        exception_do: fn x -> x end.()
+        exception_do: fn exception -> exception end.()
     end
   end
 
@@ -72,11 +74,10 @@ defmodule Exceptional.Value do
   """
   defmacro maybe_exception ~> continue do
     quote do
-      use Exceptional.Control
-
+      require Exceptional.Control
       Exceptional.Control.branch unquote(maybe_exception),
          value_do: unquote(continue),
-         exception_do: fn x -> x end.()
+         exception_do: fn exception -> exception end.()
     end
   end
 end
