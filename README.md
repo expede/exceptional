@@ -100,9 +100,9 @@ end.()
 0..10
 |> Enum.take(3)
 ~> fn list ->
-list
-|> Enum.map(fn x -> x + 1 end)
-|> Enum.sum
+  list
+  |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
 end.()
 |> to_tagged_status
 #=> {:ok, 6}
