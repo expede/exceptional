@@ -9,7 +9,7 @@ defmodule Exceptional do
   If you like to live extremely dangerously. This is _not recommended_.
   Please be certain that you want to override the standard lib before using.
 
-      use Exceptional, :overload_pipe
+      use Exceptional :overload_pipe
 
   """
 
