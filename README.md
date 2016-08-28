@@ -3,21 +3,11 @@
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
-
-  1. Add `exceptional` to your list of dependencies in `mix.exs`:
+  Add `exceptional` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
       [{:exceptional, "~> 1.0"}]
-    end
-    ```
-
-  2. Ensure `exceptional` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:exceptional]]
     end
     ```
 
