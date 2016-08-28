@@ -8,7 +8,7 @@ defmodule Exceptional.Mixfile do
       name:    "Exceptional",
       description: "Helpers for Elixir exceptions",
 
-      version: "1.0.0",
+      version: "1.0.1",
       elixir:  "~> 1.3",
 
       source_url:   "https://github.com/expede/exceptional",
@@ -26,7 +26,6 @@ defmodule Exceptional.Mixfile do
       start_permanent: Mix.env == :prod,
 
       deps: [
-        {:quark,   "~> 1.0"},
         {:credo,   "~> 0.4",  only: [:dev, :test]},
         {:earmark, "~> 1.0",  only: :dev},
         {:ex_doc,  "~> 0.13", only: :dev},
