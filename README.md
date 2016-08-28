@@ -1,5 +1,4 @@
-# Exceptional
-## Helpers for Elixir exceptions
+# Exceptional: Helpers for Elixir exceptions
 ![](https://github.com/expede/exceptional/raw/master/branding/logo_with_text.png)
 
 ## Table of Contents
