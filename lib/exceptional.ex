@@ -22,7 +22,7 @@ defmodule Exceptional do
 
   defmacro __using__(_) do
     quote do
-      import Exceptional.{Value, Raise, Raise, TaggedStatus}
+      import Exceptional.{Control, Raise, TaggedStatus, Value}
     end
   end
 end

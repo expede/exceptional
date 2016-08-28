@@ -102,7 +102,7 @@ end.()
 ~> fn list ->
 list
 |> Enum.map(fn x -> x + 1 end)
-|< Enum.sum
+|> Enum.sum
 end.()
 |> to_tagged_status
 #=> {:ok, 6}
