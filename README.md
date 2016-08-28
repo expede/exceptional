@@ -60,73 +60,73 @@ classic tagged status.
 
 ### [Escape Hatch](https://hexdocs.pm/exceptional/Exceptional.Value.html)
 
-    ```elixir
-    [1,2,3] ~> Enum.sum
-    #=> 6
+```elixir
+[1,2,3] ~> Enum.sum
+#=> 6
 
-    Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
-    #=> %Enum.OutOfBoundsError{message: "exception"}
+Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
+#=> %Enum.OutOfBoundsError{message: "exception"}
 
-    [1,2,3]
-    |> hypothetical_returns_exception
-    ~> fn would_be_list ->
-      would_be_list
-      |> Enum.map(fn x -> x + 1 end)
-      |> Enum.sum
-    end.()
-    #=> %Enum.OutOfBoundsError{message: "exception"}
+[1,2,3]
+|> hypothetical_returns_exception
+~> fn would_be_list ->
+  would_be_list
+  |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
+end.()
+#=> %Enum.OutOfBoundsError{message: "exception"}
 
-    0..10
-    |> Enum.take(3)
-    ~> fn list ->
-      list
-      |> Enum.map(fn x -> x + 1 end)
-      |> Enum.sum
-    end.()
-    #=> 6
-    ```
+0..10
+|> Enum.take(3)
+~> fn list ->
+  list
+  |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
+end.()
+#=> 6
+```
 
 ### [Back to Tagged Status](https://hexdocs.pm/exceptional/Exceptional.TaggedStatus.html)
 
-    ```elixir
-    [1,2,3]
-    |> hypothetical_returns_exception
-    ~> fn would_be_list ->
-      would_be_list
-      |> Enum.map(fn x -> x + 1 end)
-    end.()
-    #=>  {:error, "exception"}
+```elixir
+[1,2,3]
+|> hypothetical_returns_exception
+~> fn would_be_list ->
+would_be_list
+|> Enum.map(fn x -> x + 1 end)
+end.()
+#=>  {:error, "exception"}
 
-    0..10
-    |> Enum.take(3)
-    ~> fn list ->
-      list
-      |> Enum.map(fn x -> x + 1 end)
-      |< Enum.sum
-    end.()
-    |> to_tagged_status
-    #=> {:ok, 6}
-    ```
+0..10
+|> Enum.take(3)
+~> fn list ->
+list
+|> Enum.map(fn x -> x + 1 end)
+|< Enum.sum
+end.()
+|> to_tagged_status
+#=> {:ok, 6}
+```
 
 ### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)
 
-    ```elixir
-    [1,2,3] >>> Enum.sum
-    #=> 2
+```elixir
+[1,2,3] >>> Enum.sum
+#=> 2
 
-    %ArgumentError{message: "raise me"} >>> Enum.sum
-    #=> ** (ArgumentError) raise me
-    ```
+%ArgumentError{message: "raise me"} >>> Enum.sum
+#=> ** (ArgumentError) raise me
+```
 
 ### [`Manually Branch`](https://hexdocs.pm/exceptional/Exceptional.Control.html)
 
-    ```elixir
-    Exceptional.Control.branch 1,
-      value_do: fn v -> v + 1 end.(),
-      exception_do: fn %{message: msg} -> msg end.()
-    #=> 2
+```elixir
+Exceptional.Control.branch 1,
+  value_do: fn v -> v + 1 end.(),
+  exception_do: fn %{message: msg} -> msg end.()
+#=> 2
 
-    ArgumentError.exception("error message"),
-    |> Exceptional.Control.branch(value_do: fn v -> v end.(), exception_do: fn %{message: msg} -> msg end.())
-    #=> "error message"
-    ```
+ArgumentError.exception("error message"),
+|> Exceptional.Control.branch(value_do: fn v -> v end.(), exception_do: fn %{message: msg} -> msg end.())
+#=> "error message"
+```
