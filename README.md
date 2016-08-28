@@ -70,6 +70,7 @@ Enum.OutOfBoundsError.exception("exception") ~> fn x -> x + 1 end.()
 ~> fn would_be_list ->
   would_be_list
   |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
 end.()
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
@@ -78,8 +79,9 @@ end.()
 ~> fn list ->
   list
   |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
 end.()
-#=> [1,2,3]
+#=> 6
 ```
 
 ### [Tagged Status](https://hexdocs.pm/exceptional/Exceptional.TaggedStatus.html)
@@ -98,9 +100,10 @@ end.()
 ~> fn list ->
   list
   |> Enum.map(fn x -> x + 1 end)
+  |< Enum.sum
 end.()
 |> to_tagged_status
-#=> {:ok, [1,2,3]}
+#=> {:ok, 6}
 ```
 
 ### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)
@@ -118,7 +121,7 @@ end.()
 ```elixir
 Exceptional.Control.branch 1,
   value_do: fn v -> v + 1 end.(),
-  exception_do: fn ex -> ex end.()
+  exception_do: fn %{message: msg} -> msg end.()
 #=> 2
 
 ArgumentError.exception("error message"),
