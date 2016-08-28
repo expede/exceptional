@@ -8,7 +8,7 @@ defmodule Exceptional.Mixfile do
       name:    "Exceptional",
       description: "Helpers for Elixir exceptions",
 
-      version: "0.1.0",
+      version: "1.0.0",
       elixir:  "~> 1.3",
 
       source_url:   "https://github.com/expede/exceptional",
