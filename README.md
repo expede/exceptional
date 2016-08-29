@@ -1,9 +1,7 @@
 # Exceptional: Helpers for Elixir exceptions
 ![](https://github.com/expede/exceptional/raw/master/branding/logo_with_text.png)
 
-| Build Status |  Doc Coverage  | Documentation |  Hosted Package |
-|--------------|----------------|---------------|-----------------|
-| [![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional)| [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) | [hexdocs.pm/exceptional](https://hexdocs.pm/exceptional) | [Hex](https://hex.pm/packages/exceptional) |
+[![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional) [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) [![hex.pm version](https://img.shields.io/hexpm/v/exceptional.svg?style=flat)](https://hex.pm/packages/exceptional) [![API Docs](https://img.shields.io/badge/api-docs-yellow.svg?style=flat)](http://hexdocs.pm/exceptional/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/expede/exceptional/blob/master/LICENSE)
 
 ## Table of Contents
 - [Installation](#installation)
