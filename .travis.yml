@@ -8,6 +8,6 @@ language: erlang
     - export PATH=`pwd`/elixir/bin:$PATH
     - mix local.hex --force
     - mix deps.get --only test
-  script: mix test
+  script: mix test; mix credo --strict
   after_script:
     - MIX_ENV=docs mix do deps.get, inch.report
