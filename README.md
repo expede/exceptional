@@ -112,13 +112,13 @@ end.()
 
 ```elixir
 [1,2,3] >>> Enum.sum
-#=> 2
+#=> 6
 
 %ArgumentError{message: "raise me"} >>> Enum.sum
 #=> ** (ArgumentError) raise me
 ```
 
-### [`Manually Branch`](https://hexdocs.pm/exceptional/Exceptional.Control.html)
+### [Manually Branch](https://hexdocs.pm/exceptional/Exceptional.Control.html)
 
 ```elixir
 Exceptional.Control.branch 1,
