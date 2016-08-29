@@ -3,7 +3,7 @@
 
 | Build Status |  Doc Coverage  | Documentation |  Hosted Package |
 |--------------|----------------|---------------|-----------------|
-| [![Circle CI](https://circleci.com/gh/expede/exceptional/tree/master.svg?style=svg)](https://circleci.com/gh/expede/exceptional/tree/master) | [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) | [hexdocs.pm/exceptional](https://hexdocs.pm/exceptional) | [Hex](https://hex.pm/packages/exceptional) |
+| [![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional)| [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) | [hexdocs.pm/exceptional](https://hexdocs.pm/exceptional) | [Hex](https://hex.pm/packages/exceptional) |
 
 ## Table of Contents
 - [Installation](#installation)
