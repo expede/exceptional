@@ -26,10 +26,13 @@ defmodule Exceptional.Mixfile do
       start_permanent: Mix.env == :prod,
 
       deps: [
-        {:credo,   "~> 0.4",  only: [:dev, :test]},
-        {:earmark, "~> 1.0",  only: :dev},
-        {:ex_doc,  "~> 0.13", only: :dev},
-        {:inch_ex, "~> 0.5",  only: :docs}
+        {:credo,    "~> 0.4",  only: [:dev, :test]},
+
+        {:dialyxir, "~> 0.3",  only: :dev},
+        {:earmark,  "~> 1.0",  only: :dev},
+        {:ex_doc,   "~> 0.13", only: :dev},
+
+        {:inch_ex,  "~> 0.5",  only: [:dev, :docs, :test]}
       ],
 
       docs: [
