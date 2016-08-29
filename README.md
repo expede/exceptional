@@ -56,6 +56,12 @@ but in a more Elixir-y way. This is less powerful than the monad solution, but s
 understand fully, and cleaner than optimistic flow, and arguably more convenient than the
 classic tagged status.
 
+This is a classic inversion of control, and allows for very flexible patterns.
+For example, using [`>>>`](#finally-raise) (ie: `raise` if exception, otherwise continue) sidesteps
+the need for separate bang functions.
+
+Just like the classic FP wisdom: if it doubt, pass it back to the caller to handle.
+
 ## Examples
 
 ### [Escape Hatch](https://hexdocs.pm/exceptional/Exceptional.Value.html)
@@ -110,6 +116,9 @@ end.()
 
 ### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)
 
+Note that this does away with the need for separate `foo` and `foo!` functions,
+thanks to the inversion of control.
+
 ```elixir
 [1,2,3] >>> Enum.sum
 #=> 6
@@ -133,7 +142,7 @@ ArgumentError.exception("error message"),
 if_exception 1, do: fn %{message: msg} -> msg end.(), else: fn v -> v + 1 end.(),
 #=> 2
 
-ArgumentError.exception("error message"),
+ArgumentError.exception("error message")
 |> if_exception do
   fn %{message: msg} -> msg end.())
 else
