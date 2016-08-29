@@ -23,6 +23,7 @@ defmodule Exceptional.Raise do
       ** (ArgumentError) raise me
 
   """
+  @lint {Credo.Check.Design.AliasUsage, false}
   defmacro raise_or_continue!(maybe_exception, continue) do
     quote do
       require Exceptional.Control
@@ -46,6 +47,7 @@ defmodule Exceptional.Raise do
       ** (ArgumentError) raise me
 
   """
+  @lint {Credo.Check.Design.AliasUsage, false}
   defmacro maybe_exception >>> continue do
     quote do
       require Exceptional.Control
