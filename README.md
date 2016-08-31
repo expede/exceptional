@@ -21,7 +21,7 @@ Add `exceptional` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:exceptional, "~> 1.0"}]
+  [{:exceptional, "~> 1.2"}]
 end
 ```
 
