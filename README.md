@@ -99,9 +99,10 @@ end.()
 ```elixir
 [1,2,3]
 |> hypothetical_returns_exception
-~> fn would_be_list ->
-would_be_list
-|> Enum.map(fn x -> x + 1 end)
+~> fn list ->
+  list
+  |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
 end.()
 #=>  {:error, "exception"}
 
@@ -114,6 +115,31 @@ end.()
 end.()
 |> to_tagged_status
 #=> {:ok, 6}
+
+
+0..10
+|> hypothetical_returns_exception
+~> fn list ->
+  list
+  |> Enum.map(fn x -> x + 1 end)
+  |> Enum.sum
+end.()
+|> ok
+#=>  {:error, "exception"}
+
+
+maybe_sum =
+  0..10
+  |> hypothetical_returns_exception
+  ~> fn list ->
+    list
+    |> Enum.map(fn x -> x + 1 end)
+    |> Enum.sum
+  end.()
+
+~~~maybe_sum
+#=>  {:error, "exception"}
+
 ```
 
 ### [Finally Raise](https://hexdocs.pm/exceptional/Exceptional.Raise.html)

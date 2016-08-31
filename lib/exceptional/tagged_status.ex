@@ -5,8 +5,6 @@ defmodule Exceptional.TaggedStatus do
     quote do: import unquote(__MODULE__)
   end
 
-  defdelegate ok(maybe_exception), to: __MODULE__, as: :to_tagged_status
-
   @doc ~S"""
   Convert unraised exceptions to `{:error, message}`, and other values to
   `{:ok, value}`.
@@ -39,4 +37,37 @@ defmodule Exceptional.TaggedStatus do
         end
     end
   end
+
+  @doc ~S"""
+  Alias for `to_tagged_status`
+
+  ## Examples
+
+      iex> [1,2,3] |> ok
+      {:ok, [1,2,3]}
+
+      iex> Enum.OutOfBoundsError.exception("error message") |> ok
+      {:error, "error message"}
+
+  """
+  defdelegate ok(maybe_exception),  to: __MODULE__, as: :to_tagged_status
+
+
+  @doc ~S"""
+  Operator alias for `to_tagged_status`
+
+  ## Examples
+
+      iex> ~~~[1,2,3]
+      {:ok, [1,2,3]}
+
+      iex> ~~~Enum.OutOfBoundsError.exception("error message")
+      {:error, "error message"}
+
+      iex> exc = Enum.OutOfBoundsError.exception("error message")
+      ...> ~~~exc
+      {:error, "error message"}
+
+  """
+  defdelegate ~~~(maybe_exception), to: __MODULE__, as: :to_tagged_status
 end
