@@ -1,28 +1,33 @@
 defmodule Exceptional do
   @moduledoc ~S"""
-  Top-level `use` aliases"
+  Top-level `use` aliases
 
   In almost all cases, you want:
 
       use Exceptional
 
+  If you only want the operators:
+
+      use Exceptional, only: :operators
+
+  If you only want named functions:
+
+      use Exceptional, only: :named_functions
+
   If you like to live extremely dangerously. This is _not recommended_.
   Please be certain that you want to override the standard lib before using.
 
-      use Exceptional :overload_pipe
+      use Exceptional, include: :overload_pipe
 
   """
 
-  defmacro __using__(:overload_pipe) do
-    quote do
-      use Exceptional.Pipe
-      use Exceptional
-    end
-  end
-
-  defmacro __using__(_) do
-    quote do
-      import Exceptional.{Control, Raise, TaggedStatus, Value}
+  defmacro __using__(opts \\ []) do
+    quote bind_quoted: [opts: opts]  do
+      use Exceptional.Control, opts
+      use Exceptional.Pipe, opts
+      use Exceptional.Raise, opts
+      use Exceptional.TaggedStatus, opts
+      use Exceptional.Value, opts
     end
   end
 end

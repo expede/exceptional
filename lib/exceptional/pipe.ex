@@ -2,9 +2,14 @@ defmodule Exceptional.Pipe do
   @moduledoc ~S"""
   This module overloads the basic `|>` operator, and as such should be used
   with _extreme caution_ (if ever).
+
+  ## Convenience `use`s
+
+      use Exceptional.Pipe, include: :overloaded_pipe
+
   """
 
-  defmacro __using__(_) do
+  defmacro __using__(include: :overloaded_pipe) do
     quote do
       import Kernel, except: [|>: 2]
 
@@ -12,6 +17,8 @@ defmodule Exceptional.Pipe do
       import unquote(__MODULE__)
     end
   end
+
+  defmacro __using__(_), do: nil
 
   import Kernel, except: [|>: 2]
 

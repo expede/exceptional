@@ -1,5 +1,37 @@
 defmodule Exceptional.Raise do
-  @moduledoc "Raise an exception if one has been propagated, otherwise continue"
+  @moduledoc ~S"""
+  Raise an exception if one has been propagated, otherwise continue
+
+  ## Convenience `use`s
+
+  Everything:
+
+      use Exceptional.Raise
+
+  Only named functions (`raise_or_continue!`):
+
+      use Exceptional.Raise, only: :named_functions
+
+  Only operators (`>>>`):
+
+      use Exceptional.Raise, only: :operators
+
+  """
+
+
+  defmacro __using__(only: :named_functions) do
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__), except: [>>>: 2]
+    end
+  end
+
+  defmacro __using__(only: :operators) do
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__), only: [>>>: 2]
+    end
+  end
 
   defmacro __using__(_) do
     quote do

@@ -8,7 +8,7 @@ defmodule Exceptional.Mixfile do
       name:    "Exceptional",
       description: "Helpers for Elixir exceptions",
 
-      version: "1.2.0",
+      version: "1.2.1",
       elixir:  "~> 1.3",
 
       source_url:   "https://github.com/expede/exceptional",
@@ -37,7 +37,8 @@ defmodule Exceptional.Mixfile do
 
       docs: [
         logo: "./branding/logo.png",
-        extras: ["README.md"]
+        extras: ["README.md"],
+        main: "readme"
       ]
     ]
   end

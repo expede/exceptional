@@ -1,8 +1,43 @@
 defmodule Exceptional.TaggedStatus do
-  @moduledoc "Convert back to conventional Erlang/Elixir `{:ok, _}` tuples"
+  @moduledoc ~S"""
+  Convert back to conventional Erlang/Elixir `{:ok, _}` tuples
+
+  ## Convenience `use`s
+
+  Everything:
+
+      use Exceptional.TaggedStatus
+
+  Only named functions (`to_tagged_status`, `ok`):
+
+      use Exceptional.TaggedStatus, only: :named_functions
+
+  Only operators (`~~~`):
+
+      use Exceptional.TaggedStatus, only: :operators
+
+  """
+
+
+  defmacro __using__(only: :named_functions) do
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__), except: [~~~: 1]
+    end
+  end
+
+  defmacro __using__(only: :operators) do
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__), only: [~~~: 1]
+    end
+  end
 
   defmacro __using__(_) do
-    quote do: import unquote(__MODULE__)
+    quote do
+      require unquote(__MODULE__)
+      import unquote(__MODULE__)
+    end
   end
 
   @doc ~S"""
@@ -50,8 +85,7 @@ defmodule Exceptional.TaggedStatus do
       {:error, "error message"}
 
   """
-  defdelegate ok(maybe_exception),  to: __MODULE__, as: :to_tagged_status
-
+  defdelegate ok(maybe_exception), to: __MODULE__, as: :to_tagged_status
 
   @doc ~S"""
   Operator alias for `to_tagged_status`

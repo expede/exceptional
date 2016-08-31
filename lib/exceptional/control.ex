@@ -1,5 +1,14 @@
 defmodule Exceptional.Control do
-  @moduledoc "Exception control flow"
+  @moduledoc ~S"""
+  Exception control flow
+
+  ## Convenience `use`s
+
+  Everything:
+
+      use Exceptional.Control
+
+  """
 
   defmacro __using__(_) do
     quote do
