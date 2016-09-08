@@ -5,6 +5,7 @@
 
 ## Table of Contents
 - [Installation](#installation)
+- [About](#about)
 - [Prior Art](#prior-art)
   - [Tagged Status](#tagged-status)
   - [Optimistic Flow](#optimistic-flow)
@@ -24,6 +25,13 @@ def deps do
   [{:exceptional, "~> 1.2"}]
 end
 ```
+
+## About
+Exceptional is an Elixir library providing helpers for working with exceptions.
+It aims to make working with plain old (unwrapped) Elixir values more convenient,
+and to give full control back to calling functions.
+
+See the [Medium article](https://medium.com/the-monad-nomad/exceptional-freedom-from-error-s-eaabfae25d72#.zgbne4gja) for more
 
 ## Prior Art
 ### Tagged Status
