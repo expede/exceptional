@@ -3,23 +3,25 @@ defmodule Exceptional.Unraise do
   """
 
   defmacro unraise(dangerous_fun) do
-    quote do
-      {:arity, arity} = :erlang.fun_info(dangerous_fun, :arity)
-      args = generate_args(arity)
+    # quote do
+    #   {fun_name, ctx, _args} = dangerous_fun
+    #   {:arity, arity} = :erlang.fun_info(fun_name, :arity)
+    #   args = generate_args(arity)
 
-      fn unquote_splicing(arity) ->
-        try do
-          dangerous_fun(unquote_splicing(arity))
-        rescue
-          exception -> exception
-        end
-      end
-    end
+    #   fn unquote_splicing(args) ->
+    #     try do
+    #       unquote(dangerous_fun)(unquote_splicing(args))
+    #     rescue
+    #       exception -> exception
+    #     end
+    #   end
+    # end
   end
 
-  defp generate_args(arity) do
-    97 # 'a'
-    |> Stream.unfold(fn a -> {a, [97 | a]} end)
+  def generate_args(arity) do
+    [97]
+    |> Stream.unfold(fn acc -> {acc, [97 | acc]} end)
     |> Enum.take(arity)
+    |> Enum.map(&List.to_atom/1)
   end
 end
