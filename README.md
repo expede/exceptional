@@ -11,6 +11,7 @@
   - [Optimistic Flow](#optimistic-flow)
 - [Exceptional](#exceptional)
   - [Examples](#examples)
+    - [Make Safe](#make-safe)
     - [Escape Hatch](#escape-hatch)
     - [Back to Tagged Status](#back-to-tagged-status)
     - [Finally Raise](#finally-raise)
@@ -73,6 +74,23 @@ the need for separate bang functions.
 Just like the classic FP wisdom: if it doubt, pass it back to the caller to handle.
 
 ## Examples
+
+### [Make Safe](https://hexdocs.pm/exceptional/Exceptional.Safe.html))
+
+A simple way to declaw a function that normally `raise`s. (Does not change the behaviour of functions that don't `raise`).
+
+```elixir
+toothless_fetch = safe(&Enum.fetch!/2)
+[1,2,3] |> toothless_fetch.(1)
+#=> 2
+
+toothless = safe(&Enum.fetch!/2)
+[1,2,3] |> toothless.(999)
+#=> %Enum.OutOfBoundsError{message: "out of bounds error"}
+
+safe(&Enum.fetch!/2).([1,2,3], 999)
+#=> %Enum.OutOfBoundsError{message: "out of bounds error"}
+```
 
 ### [Escape Hatch](https://hexdocs.pm/exceptional/Exceptional.Value.html)
 

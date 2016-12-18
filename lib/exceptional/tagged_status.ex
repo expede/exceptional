@@ -21,21 +21,18 @@ defmodule Exceptional.TaggedStatus do
 
   defmacro __using__(only: :named_functions) do
     quote do
-      require unquote(__MODULE__)
       import unquote(__MODULE__), except: [~~~: 1]
     end
   end
 
   defmacro __using__(only: :operators) do
     quote do
-      require unquote(__MODULE__)
       import unquote(__MODULE__), only: [~~~: 1]
     end
   end
 
   defmacro __using__(_) do
     quote do
-      require unquote(__MODULE__)
       import unquote(__MODULE__)
     end
   end

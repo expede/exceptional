@@ -4,6 +4,7 @@ defmodule Exceptional.PipeTest do
   doctest Exceptional.Control, [import: true]
   doctest Exceptional.Pipe, [import: true]
   doctest Exceptional.Raise, [import: true]
+  doctest Exceptional.Safe, [import: true]
   doctest Exceptional.TaggedStatus, [import: true]
   doctest Exceptional.Value, [import: true]
 end

@@ -12,8 +12,6 @@ defmodule Exceptional.Pipe do
   defmacro __using__(include: :overloaded_pipe) do
     quote do
       import Kernel, except: [|>: 2]
-
-      require unquote(__MODULE__)
       import unquote(__MODULE__)
     end
   end
@@ -25,11 +23,11 @@ defmodule Exceptional.Pipe do
   @doc ~S"""
   ## Examples
 
-      iex> use Exceptional.Pipe
+      iex> use Exceptional.Pipe, include: :overloaded_pipe
       ...> 1 |> fn x -> x * 100 end.()
       100
 
-      iex> use Exceptional.Pipe
+      iex> use Exceptional.Pipe, include: :overloaded_pipe
       ...> ArgumentError.exception("plain error")
       ...> |> fn x -> x * 100 end.()
       %ArgumentError{message: "plain error"}
