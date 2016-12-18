@@ -75,7 +75,7 @@ Just like the classic FP wisdom: if it doubt, pass it back to the caller to hand
 
 ## Examples
 
-### [Make Safe](https://hexdocs.pm/exceptional/Exceptional.Safe.html))
+### [Make Safe](https://hexdocs.pm/exceptional/Exceptional.Safe.html)
 
 A simple way to declaw a function that normally `raise`s. (Does not change the behaviour of functions that don't `raise`).
 
