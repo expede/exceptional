@@ -13,6 +13,7 @@
   - [Examples](#examples)
     - [Make Safe](#make-safe)
     - [Escape Hatch](#escape-hatch)
+    - [Normalize Errors](#normalize-errors)
     - [Back to Tagged Status](#back-to-tagged-status)
     - [Finally Raise](#finally-raise)
     - [Manually Branch](#manually-branch)
@@ -118,6 +119,54 @@ end.()
   |> Enum.sum
 end.()
 #=> 6
+```
+
+### [Normalize Errors](https://hexdocs.pm/exceptional/Exceptional.Normalize.html)
+
+Elixir and Erlang interoperate, but represent errors differently. `normalize` normalizes values into exceptions or plain values (no `{:error, _}` tuples).
+This can be seen as the opposite of the functions that convert back to [tagged status](#back-to-tagged-status).
+Some error types may not be detected; but you may pass a custom converter (see examples below).
+
+```elixir
+normalize(42)
+#=> 42
+
+normalize(%Enum.OutOfBoundsError{message: "out of bounds error"})
+#=> %Enum.OutOfBoundsError{message: "out of bounds error"}
+
+normalize(:error)
+#=> %ErlangError{original: nil}
+
+normalize(:error)
+#=> %ErlangError{original: nil}
+
+normalize({:error, "boom"})
+#=> %ErlangError{original: "boom"}
+
+normalize({:error, {1, 2, 3}})
+#=> %ErlangError{original: {1, 2, 3}}
+
+normalize({:error, "boom with stacktrace", ["trace"]})
+#=> %ErlangError{original: "boom with stacktrace"}
+
+normalize({:good, "tuple", ["value"]})
+#=> {:good, "tuple", ["value"]}
+
+{:oh_no, {"something bad happened", %{bad: :thing}}}
+|> normalize(fn
+  {:oh_no, {message, _}} -> %File.Error{reason: message}) # This case
+  {:bang, message        -> %File.CopyError{reason: message})
+  otherwise              -> otherwise
+end)
+#=> %File.Error{message: msg}
+
+{:oh_yes, {1, 2, 3}}
+|> normalize(fn
+  {:oh_no, {message, _}} -> %File.Error{reason: message})
+  {:bang, message        -> %File.CopyError{reason: message})
+  otherwise              -> otherwise # This case
+end)
+#=> {:oh_yes, {1, 2, 3}}
 ```
 
 ### [Back to Tagged Status](https://hexdocs.pm/exceptional/Exceptional.TaggedStatus.html)
