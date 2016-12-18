@@ -28,14 +28,18 @@ defmodule Exceptional.Phoenix.ViewHelper do
 
   def render("error", for: http_code, only: formats, do: base_message) do
     Enum.map(formats, fn format ->
-      template = "#{http_code}.#{format}"
-
-      quote do
-        def render(unquote(template), error_info) do
-          render("html", unquote(base_message), error_info)
-        end
-      end
+      render("error", for: http_code, format: format, do: base_message)
     end)
+  end
+
+  def render("error", for: http_code, format: format, do: base_message) do
+    template = "#{http_code}.#{format}"
+
+    quote do
+      def render(unquote(template), error_info) do
+        render("#{unquote(format)}", unquote(base_message), error_info)
+      end
+    end
   end
 
   def render("html", base_message, error_info) do
