@@ -13,9 +13,11 @@ defmodule Exceptional.Safe do
   end
 
   @doc ~S"""
-  Create a version of a function that does not raise exception. It will return the exception struct instead.
+  Create a version of a function that does not raise exception.
+  It will return the exception struct instead.
 
-  With the `:dynamic` option passed, it takes a list of arguments (like `Kernel.apply`)
+  With the `:dynamic` option passed, it takes a list of arguments
+  (exactly like `Kernel.apply`)
 
       iex> toothless = safe(&Enum.fetch!/2, :dynamic)
       ...> toothless.([[1,2,3], 1])
@@ -49,10 +51,10 @@ defmodule Exceptional.Safe do
 
   @doc ~S"""
   Create a version of a function that does not raise exception.
-  When called, it will return the exception struct instead of raising exceptions.
+  When called, it will return the exception struct instead of raising it.
   All other behaviour is normal.
 
-  The returned anonymous function will have the same arity as the wrapped function.
+  The returned anonymous function will have the same arity as the wrapped one.
   For technical reasons, the maximum arity is 9 (like most sane functions).
 
   If you need a higher arity, please use the `:dynamic` option in `safe/2`.
@@ -86,16 +88,34 @@ defmodule Exceptional.Safe do
     {:arity, arity} = :erlang.fun_info(dangerous, :arity)
 
     case arity do
-      0 -> fn ()                          -> safe.([]) end
-      1 -> fn (a)                         -> safe.([a]) end
-      2 -> fn (a, b)                      -> safe.([a, b]) end
-      3 -> fn (a, b, c)                   -> safe.([a, b, c]) end
-      4 -> fn (a, b, c, d)                -> safe.([a, b, c, d]) end
-      5 -> fn (a, b, c, d, e)             -> safe.([a, b, c, d, e]) end
-      6 -> fn (a, b, c, d, e, f)          -> safe.([a, b, c, d, e, f]) end
-      7 -> fn (a, b, c, d, e, f, g)       -> safe.([a, b, c, d, e, f, g]) end
-      8 -> fn (a, b, c, d, e, f, g, h)    -> safe.([a, b, c, d, e, f, g, h]) end
-      9 -> fn (a, b, c, d, e, f, g, h, i) -> safe.([a, b, c, d, e, f, g, h, i]) end
+      0 -> fn () ->
+        safe.([]) end
+
+      1 -> fn (a) ->
+        safe.([a]) end
+
+      2 -> fn (a, b) ->
+        safe.([a, b]) end
+
+      3 -> fn (a, b, c) ->
+        safe.([a, b, c]) end
+
+      4 -> fn (a, b, c, d) ->
+        safe.([a, b, c, d]) end
+
+      5 -> fn (a, b, c, d, e) ->
+        safe.([a, b, c, d, e]) end
+      6 -> fn (a, b, c, d, e, f) ->
+        safe.([a, b, c, d, e, f]) end
+
+      7 -> fn (a, b, c, d, e, f, g) ->
+        safe.([a, b, c, d, e, f, g]) end
+
+      8 -> fn (a, b, c, d, e, f, g, h) ->
+        safe.([a, b, c, d, e, f, g, h]) end
+
+      9 -> fn (a, b, c, d, e, f, g, h, i) ->
+        safe.([a, b, c, d, e, f, g, h, i]) end
     end
   end
 end
