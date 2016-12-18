@@ -23,11 +23,11 @@ defmodule Exceptional.Pipe do
   @doc ~S"""
   ## Examples
 
-      iex> use Exceptional.Pipe
+      iex> use Exceptional.Pipe, include: :overloaded_pipe
       ...> 1 |> fn x -> x * 100 end.()
       100
 
-      iex> use Exceptional.Pipe
+      iex> use Exceptional.Pipe, include: :overloaded_pipe
       ...> ArgumentError.exception("plain error")
       ...> |> fn x -> x * 100 end.()
       %ArgumentError{message: "plain error"}
