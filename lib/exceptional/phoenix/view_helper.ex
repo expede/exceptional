@@ -5,12 +5,22 @@ defmodule Exceptional.Phoenix.ViewHelper do
 
   @formats ~w(html json)a
 
+  @type branch :: {atom, [any], [any]}
+  @type ast    :: branch | [branch]
+
   @type full     :: %{error: String.t, reason: String.t}
   @type simple   :: %{error: String.t}
   @type response :: simple | full
 
   @doc ~S"""
   Generate simple views for Elixir exceptions
+
+  ## Examples
+
+      defrender :error, for: 404, do: "Sorry, we can't find that resource"
+      # ...
+      %{error: "Sorry, we can't find that resource", reason: "Photo deleted"}
+
   """
   @spec defrender(
     :error,
@@ -21,6 +31,9 @@ defmodule Exceptional.Phoenix.ViewHelper do
     render(:error, for: http_code, only: @formats, do: base_message)
   end
 
+  @doc ~S"""
+  Same as `defrender/2`, but with a format blacklist (ex. `except: [:json]`)
+  """
   @spec defrender(:error, for: non_neg_integer, except: [atom], do: String.t)
     :: ast
   defmacro defrender(:error, for: http_code, except: except, do: base_message) do
@@ -28,6 +41,9 @@ defmodule Exceptional.Phoenix.ViewHelper do
     render(:errors, for: http_code, only: only, do: base_message)
   end
 
+  @doc ~S"""
+  Same as `defrender/2`, but with a format whitelist (ex. `only: [:html, :json]`)
+  """
   @spec defrender(:error, for: non_neg_integer, only: [atom], do: String.t)
     :: ast
   defmacro defrender(:error, for: http_code, only: formats, do: base_message) do
