@@ -8,4 +8,6 @@ defmodule Exceptional.PipeTest do
   doctest Exceptional.Safe, [import: true]
   doctest Exceptional.TaggedStatus, [import: true]
   doctest Exceptional.Value, [import: true]
+
+  doctest Exceptional.Phoenix.ViewHelper, [import: true]
 end

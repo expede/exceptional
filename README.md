@@ -17,6 +17,7 @@
     - [Back to Tagged Status](#back-to-tagged-status)
     - [Finally Raise](#finally-raise)
     - [Manually Branch](#manually-branch)
+    - [Phoenix Error View Helpers](#phoenix-error-view-helpers)
 
 ## Installation
 
@@ -252,4 +253,25 @@ else
   fn v -> v end.()
 end
 #=> "error message"
+```
+
+### [Phoenix Error View Helpers](https://hexdocs.pm/exceptional/Exceptional.Phoenix.ViewHelpers.html)
+
+Automated rendering of error views based on the `message` field on exception structs.
+This is often sufficient for simple JSON cases and pre-release HTML. It is recommended to write custom error views before production to give your users as much detail as possible in the user friendliest way that their content type allows.
+
+```elixir
+# /web/views/error_view.ex
+defrender :error, for: 401, do: "Not authorized"
+defrender :error, for: 404, only: [:json], do: "Data not found"
+defrender :error, for: 422, except: [:html] do: "Unprocessible entity"
+defrender :error, for: 500, do: "Server internal error"
+
+# Example JSON Error Response
+
+404 %{error: "Data not found", reason: "Photo deleted"}
+
+# Example HTML Error Response
+
+500 "Server internal error"
 ```
