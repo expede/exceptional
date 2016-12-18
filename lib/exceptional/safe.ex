@@ -78,8 +78,8 @@ defmodule Exceptional.Safe do
   """
   @spec safe(fun) :: fun
   @lint [
-    {Credo.Check.Refactor.ABCSize, false}
-    {Credo.Check.Refactor.CyclomaticComplexity, false},
+    {Credo.Check.Refactor.ABCSize, false},
+    {Credo.Check.Refactor.CyclomaticComplexity, false}
   ]
   def safe(dangerous) do
     safe = safe(dangerous, :dynamic)
