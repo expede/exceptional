@@ -16,16 +16,20 @@ defmodule Exceptional.Phoenix.ViewHelper do
     :error,
     for: non_neg_integer | String.t,
     do: String.t
-  ) :: String.t | map
+  ) :: ast
   defmacro defrender(:error, for: http_code, do: base_message) do
     render(:error, for: http_code, only: @formats, do: base_message)
   end
 
+  @spec defrender(:error, for: non_neg_integer, except: [atom], do: String.t)
+    :: ast
   defmacro defrender(:error, for: http_code, except: except, do: base_message) do
     only = Enum.reject(@formats, fn format -> Enum.member?(except, format) end)
     render(:errors, for: http_code, only: only, do: base_message)
   end
 
+  @spec defrender(:error, for: non_neg_integer, only: [atom], do: String.t)
+    :: ast
   defmacro defrender(:error, for: http_code, only: formats, do: base_message) do
     render(:errors, for: http_code, only: formats, do: base_message)
   end
@@ -84,6 +88,51 @@ defmodule Exceptional.Phoenix.ViewHelper do
     end)
   end
 
+  @doc ~S"""
+  Generate a single error hander
+
+  ## Examples
+
+      iex> render(:error, for: 404, format: :json, do: "Oh no!")
+      {
+        :def,
+        [context: Exceptional.Phoenix.ViewHelper, import: Kernel],
+        [
+          {
+            :render,
+            [context: Exceptional.Phoenix.ViewHelper],
+            [
+              "404.json",
+              {:error_info, [], Exceptional.Phoenix.ViewHelper}
+            ]
+          },
+          [do: {
+            :render, [], [
+              {
+                :<<>>, [], [
+                  {
+                    :::,
+                    [],
+                    [
+                      {
+                        {:., [], [Kernel, :to_string]},
+                        [],
+                        [:json]
+                      },
+                      {:binary, [], Exceptional.Phoenix.ViewHelper}
+                    ]
+                  }
+                ]
+              },
+              "Oh no!",
+              {:error_info, [], Exceptional.Phoenix.ViewHelper}
+            ]
+          }]
+        ]
+      }
+
+
+  """
   @spec render(String.t, for: non_neg_integer, format: atom, do: String.t)
     :: response
   def render(:error, for: http_code, format: format, do: base_message) do
