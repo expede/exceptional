@@ -42,7 +42,7 @@ defmodule Exceptional.Phoenix.ViewHelper do
   end
 
   @doc ~S"""
-  Same as `defrender/2`, but with a format whitelist (ex. `only: [:html, :json]`)
+  Same as `defrender/2`, but with a format whitelist (ex. `only: [:json]`)
   """
   @spec defrender(:error, for: non_neg_integer, only: [atom], do: String.t)
     :: ast
