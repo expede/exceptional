@@ -12,8 +12,6 @@ defmodule Exceptional.Pipe do
   defmacro __using__(include: :overloaded_pipe) do
     quote do
       import Kernel, except: [|>: 2]
-
-      require unquote(__MODULE__)
       import unquote(__MODULE__)
     end
   end
