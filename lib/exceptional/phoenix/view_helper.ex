@@ -28,7 +28,7 @@ defmodule Exceptional.Phoenix.ViewHelper do
     do: String.t
   ) :: ast
   defmacro defrender(:error, for: http_code, do: base_message) do
-    render(:error, for: http_code, only: @formats, do: base_message)
+    render(:errors, for: http_code, only: @formats, do: base_message)
   end
 
   @doc ~S"""
