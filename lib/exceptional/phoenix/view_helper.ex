@@ -156,7 +156,12 @@ defmodule Exceptional.Phoenix.ViewHelper do
 
     quote do
       def render(unquote(template), error_info) do
-        render("#{unquote(format)}", unquote(base_message), error_info)
+        Phoenix.View.render(
+          __MODULE__,
+          "#{unquote(format)}",
+          unquote(base_message),
+          error_info
+        )
       end
     end
   end
