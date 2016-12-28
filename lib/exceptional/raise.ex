@@ -85,4 +85,24 @@ defmodule Exceptional.Raise do
         exception_do: fn exception -> raise(exception) end.()
     end
   end
+
+  @doc ~S"""
+  Raise an exception, otherwise return plain value
+
+  ## Examples
+
+      iex> ensure!([1, 2, 3])
+      [1, 2, 3]
+
+      iex> ensure!(%ArgumentError{message: "raise me"})
+      ** (ArgumentError) raise me
+
+  """
+  def ensure!(maybe_exception) do
+    if Exception.exception?(maybe_exception) do
+      raise maybe_exception
+    else
+      maybe_exception
+    end
+  end
 end
