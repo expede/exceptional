@@ -27,6 +27,7 @@ defmodule Exceptional do
       use Exceptional.Normalize, opts
       use Exceptional.Pipe, opts
       use Exceptional.Raise, opts
+      use Exceptional.Safe, opts
       use Exceptional.TaggedStatus, opts
       use Exceptional.Value, opts
     end
