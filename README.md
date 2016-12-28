@@ -229,6 +229,31 @@ thanks to the inversion of control.
 
 %ArgumentError{message: "raise me"} >>> Enum.sum
 #=> ** (ArgumentError) raise me
+
+ensure!([1, 2, 3])
+#=> [1, 2, 3]
+
+#=> ensure!(%ArgumentError{message: "raise me"})
+** (ArgumentError) raise me
+
+defmodule Foo do
+  use Exceptional
+
+  def! foo(a), do: a
+end
+
+Foo.foo([1, 2, 3])
+#=> [1, 2, 3]
+
+Foo.foo(%ArgumentError{message: "raise me"})
+#=> %ArgumentError{message: "raise me"}
+
+Foo.foo!([1, 2, 3])
+#=> [1, 2, 3]
+
+Foo.foo!(%ArgumentError{message: "raise me"})
+#=> ** (ArgumentError) raise me
+
 ```
 
 ### [Manually Branch](https://hexdocs.pm/exceptional/Exceptional.Control.html)
