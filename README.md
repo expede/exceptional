@@ -233,8 +233,8 @@ thanks to the inversion of control.
 ensure!([1, 2, 3])
 #=> [1, 2, 3]
 
-#=> ensure!(%ArgumentError{message: "raise me"})
-** (ArgumentError) raise me
+ensure!(%ArgumentError{message: "raise me"})
+#=> ** (ArgumentError) raise me
 
 defmodule Foo do
   use Exceptional
