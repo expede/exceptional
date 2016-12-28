@@ -85,4 +85,76 @@ defmodule Exceptional.Raise do
         exception_do: fn exception -> raise(exception) end.()
     end
   end
+
+  @doc ~S"""
+  Raise an exception, otherwise return plain value
+
+  ## Examples
+
+      iex> ensure!([1, 2, 3])
+      [1, 2, 3]
+
+      iex> ensure!(%ArgumentError{message: "raise me"})
+      ** (ArgumentError) raise me
+
+  """
+  def ensure!(maybe_exception) do
+    if Exception.exception?(maybe_exception) do
+      raise maybe_exception
+    else
+      maybe_exception
+    end
+  end
+
+  @doc ~S"""
+  Define a function and automatically generate a variant that raises
+
+  ## Examples
+
+      iex> defmodule Foo do
+      ...>   use Exceptional
+      ...>
+      ...>   def! foo(a), do: a
+      ...> end
+      ...>
+      ...> Foo.foo([1, 2, 3])
+      [1, 2, 3]
+
+      iex> defmodule Bar do
+      ...>   use Exceptional
+      ...>
+      ...>   def! bar(a), do: a
+      ...> end
+      ...>
+      ...> Bar.bar(%ArgumentError{message: "raise me"})
+      %ArgumentError{message: "raise me"}
+
+      iex> defmodule Baz do
+      ...>   use Exceptional
+      ...>
+      ...>   def! baz(a), do: a
+      ...> end
+      ...>
+      ...> Baz.baz!([1, 2, 3])
+      [1, 2, 3]
+
+      iex> defmodule Quux do
+      ...>   use Exceptional
+      ...>
+      ...>   def! quux(a), do: a
+      ...> end
+      ...>
+      ...> Quux.quux!(%ArgumentError{message: "raise me"})
+      ** (ArgumentError) raise me
+
+  """
+  defmacro def!(head, do: body) do
+    {name, ctx, args} = head
+    variant = {String.to_atom("#{name}!"), ctx, args}
+
+    quote do
+      def unquote(head), do: unquote(body)
+      def unquote(variant), do: unquote(body) |> ensure!
+    end
+  end
 end
