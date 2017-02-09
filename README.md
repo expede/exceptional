@@ -138,9 +138,6 @@ normalize(%Enum.OutOfBoundsError{message: "out of bounds error"})
 normalize(:error)
 #=> %ErlangError{original: nil}
 
-normalize(:error)
-#=> %ErlangError{original: nil}
-
 normalize({:error, "boom"})
 #=> %ErlangError{original: "boom"}
 
