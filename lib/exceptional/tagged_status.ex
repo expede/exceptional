@@ -18,7 +18,6 @@ defmodule Exceptional.TaggedStatus do
 
   """
 
-
   defmacro __using__(only: :named_functions) do
     quote do
       import unquote(__MODULE__), except: [~~~: 1]

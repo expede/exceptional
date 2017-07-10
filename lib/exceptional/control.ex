@@ -69,7 +69,6 @@ defmodule Exceptional.Control do
       ...> end
       "error message"
 
-
       iex> use Exceptional.Control
       ...> ArgumentError.exception("error message")
       ...> |> if_exception do
