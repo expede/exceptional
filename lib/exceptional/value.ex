@@ -41,7 +41,7 @@ defmodule Exceptional.Value do
   Essentially an `Either` construct for `Exception`s.
 
   Note that this does not catch `raise` or `throw`s. If you want that behaviour,
-  please see `Exceptional.Rescue`.
+  please see `Exceptional.Raise`.
 
   ## Examples
 
