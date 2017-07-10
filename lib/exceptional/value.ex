@@ -40,8 +40,8 @@ defmodule Exceptional.Value do
   If an exception, return the exception, otherwise continue computation.
   Essentially an `Either` construct for `Exception`s.
 
-  Note that this does not catch `raise` or `throw`s. If you want that behaviour,
-  please see `Exceptional.Rescue`.
+  Note that this does not rescue `raise`s.
+  If you want that behaviour, please see `Exceptional.Safe.safe/1`
 
   ## Examples
 
