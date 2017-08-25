@@ -104,6 +104,7 @@ defmodule Exceptional.Block do
     opts = bodies ++ opts
     body = gen_block(opts)
     quote do
+      # credo:disable-for-lines:1 Credo.Check.Design.AliasUsage
       Exceptional.Raise.ensure!(unquote(body))
     end
   end
