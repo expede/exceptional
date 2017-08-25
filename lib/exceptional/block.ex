@@ -84,6 +84,30 @@ defmodule Exceptional.Block do
     gen_block(opts)
   end
 
+  @doc ~S"""
+  The auto-throwing version of `block`, will raise it's final error.
+
+  ## Examples
+
+      iex> use Exceptional.Block
+      ...> block! do
+      ...>   a <- {:ok, 2}
+      ...>   b = a * 2
+      ...>   _ = 42
+      ...>   c <- {:error, "Failed: #{b}"}
+      ...>   c * 2
+      ...> end
+      ** (ErlangError) Erlang error: "Failed: 4"
+
+  """
+  defmacro block!(opts, bodies \\ []) do
+    opts = bodies ++ opts
+    body = gen_block(opts)
+    quote do
+      Exceptional.Raise.ensure!(unquote(body))
+    end
+  end
+
   defp gen_block(opts) do
     {:__block__, _meta, do_body} = wrap_block(opts[:do] || throw "Must specify a `do` body clause with at least one expression!")
     conversion_fun_ast =
