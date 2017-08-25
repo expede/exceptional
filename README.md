@@ -327,6 +327,16 @@ block! do
   c * 2
 end
 #=> ** (ErlangError) Erlang error: "Failed: 4"
+
+# Early return:
+
+block do
+  a <- {:ok, 2}
+  b = a * 2
+  :wrong <- b * 2 # Returning 8 here due to wrong match
+  b * 4
+end
+8
 ```
 
 ## Related Packages

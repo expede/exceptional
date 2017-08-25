@@ -44,6 +44,33 @@ defmodule Exceptional.Block do
       ...> block do
       ...>   a <- {:ok, 2}
       ...>   b = a * 2
+      ...>   8 <- b * 2 # Match's supported on the values
+      ...>   b * 4
+      ...> end
+      16
+
+      iex> use Exceptional.Block
+      ...> block do
+      ...>   a <- {:ok, 2}
+      ...>   b = a * 2
+      ...>   :wrong <- b * 2 # Returning 8 here due to wrong match
+      ...>   b * 4
+      ...> end
+      8
+
+      iex> use Exceptional.Block
+      ...> block do
+      ...>   a <- {:ok, 2}
+      ...>   b = a * 2
+      ...>   :wrong = b * 2 # Match Exception is raised here
+      ...>   b * 4
+      ...> end
+      ** (MatchError) no match of right hand side value: 8
+
+      iex> use Exceptional.Block
+      ...> block do
+      ...>   a <- {:ok, 2}
+      ...>   b = a * 2
       ...>   _ = 42
       ...>   c <- {:error, "Failed: #{b}"}
       ...>   c * 2
