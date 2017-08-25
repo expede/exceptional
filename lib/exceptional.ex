@@ -23,6 +23,7 @@ defmodule Exceptional do
 
   defmacro __using__(opts \\ []) do
     quote bind_quoted: [opts: opts]  do
+      use Exceptional.Block, opts
       use Exceptional.Control, opts
       use Exceptional.Normalize, opts
       use Exceptional.Pipe, opts
