@@ -277,6 +277,61 @@ end
 #=> "error message"
 ```
 
+### [Block](https://hexdocs.pm/exceptional/Exceptional.Block.html)
+
+Kind of a combination of Elixir's normal
+[`with`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#with/1)
+special form in addition to a monad'y `do` pipeline.
+
+This automatically-wraps every return value with
+[`normalize`](https://hexdocs.pm/exceptional/Exceptional.Normalize.html).
+
+```elixir
+block do
+  a <- {:ok, 2}
+  b = a * 2
+  c <- {:ok, b * 2}
+  c * 2
+end
+#=> 16
+
+
+block do
+  a <- {:ok, 2}
+  b = a * 2
+  _ = 42
+  c <- {:error, "Failed: #{b}"}
+  c * 2
+end
+#=> %ErlangError{original: "Failed: 4"}
+
+
+conversion_fun = fn
+  {:blah, reason} -> %ErlangError{original: "Blah: #{reason}"}
+  e -> e
+end
+block conversion_fun: conversion_fun do
+  a <- {:ok, 2}
+  b = a * 2
+  _ = 42
+  c <- {:blah, "Failed: #{b}"}
+  c * 2
+else
+  _ -> {:error, "unknown error"}
+end
+#=> %ErlangError{original: "unknown error"}
+
+
+block! do
+  a <- {:ok, 2}
+  b = a * 2
+  _ = 42
+  c <- {:error, "Failed: #{b}"}
+  c * 2
+end
+#=> ** (ErlangError) Erlang error: "Failed: 4"
+```
+
 ## Related Packages
 
 - [Phoenix/Exceptional](https://hex.pm/packages/phoenix_exceptional)
