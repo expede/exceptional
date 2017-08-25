@@ -23,6 +23,18 @@ defmodule Exceptional.Block do
   not something like `{:ok, value}` when using `<-`.  `=` is unwrapped and
   unhandled.
 
+  This requires a `do` body, last expression is final returned value.
+  - Inside the `do` body it accepts `matcher <- expression` and will early
+    return if it is a bad match or the expression returns an error.
+  - Values will be unwrapped as in `normalize`
+
+  This accepts an `else` body, which takes cases to handle error conditions
+  and transform them as necessary.
+
+  This takes a `conversion_fun: some_fun` optional argument to pass in to the
+  `normalize` call to transform normalization errors into custom values and/or
+  errors.
+
   ## Examples
 
       iex> use Exceptional.Block
