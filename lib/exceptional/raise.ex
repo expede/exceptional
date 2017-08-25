@@ -51,7 +51,7 @@ defmodule Exceptional.Raise do
       ** (ArgumentError) raise me
 
   """
-  @lint {Credo.Check.Design.AliasUsage, false}
+  # credo:disable-for-lines:8 Credo.Check.Design.AliasUsage
   defmacro raise_or_continue!(maybe_exception, continue) do
     quote do
       require Exceptional.Control
@@ -75,7 +75,7 @@ defmodule Exceptional.Raise do
       ** (ArgumentError) raise me
 
   """
-  @lint {Credo.Check.Design.AliasUsage, false}
+  # credo:disable-for-lines:8 Credo.Check.Design.AliasUsage
   defmacro maybe_exception >>> continue do
     quote do
       require Exceptional.Control

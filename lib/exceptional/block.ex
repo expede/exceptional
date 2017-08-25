@@ -16,7 +16,6 @@ defmodule Exceptional.Block do
     end
   end
 
-
   @doc ~S"""
   This specifies a block that is tested as normal similar to Elixir's `with`.
 
@@ -64,7 +63,10 @@ defmodule Exceptional.Block do
       %ErlangError{original: "unknown error"}
 
       iex> use Exceptional.Block
-      ...> conversion_fun = fn {:blah, reason} -> %ErlangError{original: "Blah: #{reason}"}; e -> e end
+      ...> conversion_fun = fn
+      ...>   {:blah, reason} -> %ErlangError{original: "Blah: #{reason}"}
+      ...>   e -> e
+      ...> end
       ...> block conversion_fun: conversion_fun do
       ...>   a <- {:ok, 2}
       ...>   b = a * 2
@@ -94,10 +96,11 @@ defmodule Exceptional.Block do
       case opts[:else] do
         nil -> quote do fn x -> x end end
         clauses ->
-          # credo:disable-for-lines:7
+          # credo:disable-for-lines:7 /Alias|Nesting/
           quote do
             fn x ->
-              case x do
+              x
+              |> case do
                 unquote(clauses)
               end
               |> Exceptional.Normalize.normalize(unquote(conversion_fun))
@@ -126,6 +129,7 @@ defmodule Exceptional.Block do
       end
     {call, gen_meta, args} =
       quote generated: true do
+        # credo:disable-for-lines:1 Credo.Check.Design.AliasUsage
         case Exceptional.Normalize.normalize(unquote(bound), unquote(conversion_fun)) do
           %{__exception__: _} = unquote(value) -> unquote(else_fun).(unquote(value))
           unquote(binding) = unquote(value) -> unquote(next)
@@ -153,12 +157,13 @@ defmodule Exceptional.Block do
   defp gen_unique_var(name) do
     id = Process.get(__MODULE__, 0)
     Process.put(__MODULE__, id + 1)
-    if id === 0 do
-      String.to_atom(name)
-    else
-      String.to_atom("#{name}_#{id}")
-    end
-    |> Macro.var(__MODULE__)
+    name =
+      if id === 0 do
+        String.to_atom(name)
+      else
+        String.to_atom("#{name}_#{id}")
+      end
+    Macro.var(name, __MODULE__)
   end
 
 end

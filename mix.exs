@@ -26,7 +26,7 @@ defmodule Exceptional.Mixfile do
       start_permanent: Mix.env == :prod,
 
       deps: [
-        {:credo,    "~> 0.5",  only: [:dev, :test]},
+        {:credo,    "~> 0.8",  only: [:dev, :test]},
 
         {:dialyxir, "~> 0.3",  only: :dev},
         {:earmark,  "~> 1.0",  only: :dev},

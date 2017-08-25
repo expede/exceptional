@@ -66,7 +66,7 @@ defmodule Exceptional.Value do
       ** (Enum.OutOfBoundsError) out of bounds error
 
   """
-  @lint {Credo.Check.Design.AliasUsage, false}
+  # credo:disable-for-lines:8 Credo.Check.Design.AliasUsage
   @spec exception_or_continue(Exception.t | any, fun) :: Exception.t | any
   defmacro exception_or_continue(maybe_exception, continue) do
     quote do
@@ -101,7 +101,7 @@ defmodule Exceptional.Value do
       ** (Enum.OutOfBoundsError) out of bounds error
 
   """
-  @lint {Credo.Check.Design.AliasUsage, false}
+  # credo:disable-for-lines:8 Credo.Check.Design.AliasUsage
   defmacro maybe_exception ~> continue do
     quote do
       require Exceptional.Control
