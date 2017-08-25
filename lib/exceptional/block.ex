@@ -101,9 +101,10 @@ defmodule Exceptional.Block do
       ...>   c <- {:blah, "Failed: #{b}"}
       ...>   c * 2
       ...> else
+      ...>   %ErlangError{original: "Blah: "<>_} = exc -> exc
       ...>   _ -> {:error, "unknown error"}
       ...> end
-      %ErlangError{original: "unknown error"}
+      %ErlangError{original: "Blah: Failed: 4"}
 
   """
   defmacro block(opts, bodies \\ []) do
