@@ -281,7 +281,7 @@ end
 
 Kind of a combination of Elixir's normal
 [`with`](https://hexdocs.pm/elixir/Kernel.SpecialForms.html#with/1)
-special form in addition to a monad'y `do` pipeline.
+special form in addition to a monad-style `do` pipeline.
 
 This automatically-wraps every return value with
 [`normalize`](https://hexdocs.pm/exceptional/Exceptional.Normalize.html).
