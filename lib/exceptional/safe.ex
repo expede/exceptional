@@ -78,11 +78,8 @@ defmodule Exceptional.Safe do
       :error
 
   """
+  # credo:disable-for-lines:37 /ABCSize|CyclomaticComplexity/
   @spec safe(fun) :: fun
-  @lint [
-    {Credo.Check.Refactor.ABCSize, false},
-    {Credo.Check.Refactor.CyclomaticComplexity, false}
-  ]
   def safe(dangerous) do
     safe = safe(dangerous, :dynamic)
     {:arity, arity} = :erlang.fun_info(dangerous, :arity)

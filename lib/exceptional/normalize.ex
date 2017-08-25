@@ -82,6 +82,7 @@ defmodule Exceptional.Normalize do
         if Exception.exception?(err), do: err, else: plain
 
       {:ok, value} -> value
+      exc = %{__exception__: _} -> exc
       value -> conversion_fun.(value)
     end
   end

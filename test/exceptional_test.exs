@@ -1,6 +1,7 @@
 defmodule Exceptional.PipeTest do
   use ExUnit.Case
 
+  doctest Exceptional.Block, [import: true]
   doctest Exceptional.Control, [import: true]
   doctest Exceptional.Normalize, [import: true]
   doctest Exceptional.Pipe, [import: true]
