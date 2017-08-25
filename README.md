@@ -295,7 +295,6 @@ block do
 end
 #=> 16
 
-
 block do
   a <- {:ok, 2}
   b = a * 2
@@ -304,7 +303,6 @@ block do
   c * 2
 end
 #=> %ErlangError{original: "Failed: 4"}
-
 
 conversion_fun = fn
   {:blah, reason} -> %ErlangError{original: "Blah: #{reason}"}
@@ -320,7 +318,6 @@ else
   _ -> {:error, "unknown error"}
 end
 #=> %ErlangError{original: "unknown error"}
-
 
 block! do
   a <- {:ok, 2}
