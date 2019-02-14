@@ -1,7 +1,15 @@
 # Exceptional: Helpers for Elixir exceptions
 ![](https://github.com/expede/exceptional/raw/master/branding/logo_with_text.png)
 
-[![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional) [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) [![Deps Status](https://beta.hexfaktor.org/badge/all/github/expede/exceptional.svg)](https://beta.hexfaktor.org/github/expede/exceptional) [![hex.pm version](https://img.shields.io/hexpm/v/exceptional.svg?style=flat)](https://hex.pm/packages/exceptional) [![API Docs](https://img.shields.io/badge/api-docs-yellow.svg?style=flat)](http://hexdocs.pm/exceptional/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/expede/exceptional/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional)
+[![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional)
+[![hex.pm version](https://img.shields.io/hexpm/v/exceptional.svg?style=flat)](https://hex.pm/packages/exceptional)
+[![API Docs](https://img.shields.io/badge/api-docs-MediumPurple.svg?style=flat)](http://hexdocs.pm/exceptional/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/expede/exceptional/blob/master/LICENSE)
+
+[![](https://opencollective.com/exceptional/tiers/backer.svg?avatarHeight=50)](https://opencollective.com/exceptional/contribute/tier/8074-backer)
+
+[![](https://opencollective.com/exceptional/tiers/sponsor.svg?avatarHeight=50)](https://opencollective.com/exceptional/contribute/tier/8075-sponsor)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -25,7 +33,7 @@ Add `exceptional` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:exceptional, "~> 2.0"}]
+  [{:exceptional, "~> 2.1"}]
 end
 ```
 
@@ -97,28 +105,22 @@ safe(&Enum.fetch!/2).([1,2,3], 999)
 ### [Escape Hatch](https://hexdocs.pm/exceptional/Exceptional.Value.html)
 
 ```elixir
-[1,2,3] ~> Enum.sum
+[1,2,3] ~> Enum.sum()
 #=> 6
 
 Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 [1,2,3]
-|> hypothetical_returns_exception
-~> fn would_be_list ->
-  would_be_list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
-end.()
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 0..10
 |> Enum.take(3)
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
-end.()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 #=> 6
 ```
 
@@ -171,44 +173,32 @@ end)
 
 ```elixir
 [1,2,3]
-|> hypothetical_returns_exception
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
-end.()
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 #=>  {:error, "exception"}
 
 0..10
 |> Enum.take(3)
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
-end.()
-|> to_tagged_status
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
+|> to_tagged_status()
 #=> {:ok, 6}
 
 
 0..10
-|> hypothetical_returns_exception
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
-end.()
-|> ok
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
+|> ok()
 #=>  {:error, "exception"}
 
 
 maybe_sum =
   0..10
-  |> hypothetical_returns_exception
-  ~> fn list ->
-    list
-    |> Enum.map(fn x -> x + 1 end)
-    |> Enum.sum
-  end.()
+  |> hypothetical_returns_exception()
+  ~> Enum.map(fn x -> x + 1 end)
+  ~> Enum.sum()
 
 ~~~maybe_sum
 #=>  {:error, "exception"}
@@ -221,10 +211,10 @@ Note that this does away with the need for separate `foo` and `foo!` functions,
 thanks to the inversion of control.
 
 ```elixir
-[1,2,3] >>> Enum.sum
+[1,2,3] >>> Enum.sum()
 #=> 6
 
-%ArgumentError{message: "raise me"} >>> Enum.sum
+%ArgumentError{message: "raise me"} >>> Enum.sum()
 #=> ** (ArgumentError) raise me
 
 ensure!([1, 2, 3])

@@ -42,10 +42,10 @@ defmodule Exceptional.TaggedStatus do
 
   ## Examples
 
-      iex> to_tagged_status [1,2,3]
+      iex> to_tagged_status([1,2,3])
       {:ok, [1,2,3]}
 
-      iex> Enum.OutOfBoundsError.exception("error message") |> to_tagged_status
+      iex> Enum.OutOfBoundsError.exception("error message") |> to_tagged_status()
       {:error, "error message"}
 
   """
@@ -53,8 +53,8 @@ defmodule Exceptional.TaggedStatus do
     case maybe_exception do
       tuple when is_tuple(tuple) ->
         tuple
-        |> Tuple.to_list
-        |> List.first
+        |> Tuple.to_list()
+        |> List.first()
         |> case do
              tag when is_atom(tag) -> tuple
              _ -> {:ok, tuple}
@@ -74,7 +74,7 @@ defmodule Exceptional.TaggedStatus do
 
   ## Examples
 
-      iex> [1,2,3] |> ok
+      iex> [1,2,3] |> ok()
       {:ok, [1,2,3]}
 
       iex> Enum.OutOfBoundsError.exception("error message") |> ok

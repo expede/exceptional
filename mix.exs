@@ -8,7 +8,7 @@ defmodule Exceptional.Mixfile do
       name:    "Exceptional",
       description: "Error & exception handling helpers for Elixir",
 
-      version: "2.1.0",
+      version: "2.1.1",
       elixir:  "~> 1.3",
 
       source_url:   "https://github.com/expede/exceptional",
@@ -20,19 +20,19 @@ defmodule Exceptional.Mixfile do
         links: %{"GitHub" => "https://github.com/expede/exceptional"}
       ],
 
-      aliases: ["quality": ["test", "credo --strict"]],
+      aliases: [quality: ["test", "credo --strict"]],
 
       build_embedded:  Mix.env == :prod,
       start_permanent: Mix.env == :prod,
 
       deps: [
-        {:credo,    "~> 0.5",  only: [:dev, :test]},
+        {:credo,    "~> 1.0",  only: [:dev, :test]},
 
-        {:dialyxir, "~> 0.3",  only: :dev},
-        {:earmark,  "~> 1.0",  only: :dev},
-        {:ex_doc,   "~> 0.14", only: :dev},
+        {:dialyxir, "~> 0.5",  only: :dev},
+        {:earmark,  "~> 1.3",  only: :dev},
+        {:ex_doc,   "~> 0.19", only: :dev},
 
-        {:inch_ex,  "~> 0.5",  only: [:dev, :docs, :test]}
+        {:inch_ex,  "~> 2.0",  only: [:dev, :docs, :test]}
       ],
 
       docs: [
