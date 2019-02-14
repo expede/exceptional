@@ -32,7 +32,7 @@ defmodule Exceptional.Mixfile do
         {:earmark,  "~> 1.0",  only: :dev},
         {:ex_doc,   "~> 0.14", only: :dev},
 
-        {:inch_ex,  "~> 0.5",  only: [:dev, :docs, :test]}
+        {:inch_ex,  "~> 2.0",  only: [:dev, :docs, :test]}
       ],
 
       docs: [
