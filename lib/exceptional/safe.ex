@@ -79,10 +79,8 @@ defmodule Exceptional.Safe do
 
   """
   @spec safe(fun) :: fun
-  @lint [
-    {Credo.Check.Refactor.ABCSize, false},
-    {Credo.Check.Refactor.CyclomaticComplexity, false}
-  ]
+  # credo:disable-for-lines:35 Credo.Check.Refactor.ABCSize
+  # credo:disable-for-lines:35 Credo.Check.Refactor.CyclomaticComplexity
   def safe(dangerous) do
     safe = safe(dangerous, :dynamic)
     {:arity, arity} = :erlang.fun_info(dangerous, :arity)
