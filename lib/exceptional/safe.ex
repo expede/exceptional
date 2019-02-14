@@ -3,8 +3,8 @@ defmodule Exceptional.Safe do
   Convert a function that may `raise` into one that returns an exception struct
   """
 
-  defdelegate lower(dangeroud_fun),          to: __MODULE__, as: :safe
-  defdelegate lower(dangeroud_fun, dynamic), to: __MODULE__, as: :safe
+  defdelegate lower(dangerous_fun),          to: __MODULE__, as: :safe
+  defdelegate lower(dangerous_fun, dynamic), to: __MODULE__, as: :safe
 
   defmacro __using__(_) do
     quote do
