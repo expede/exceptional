@@ -105,27 +105,23 @@ safe(&Enum.fetch!/2).([1,2,3], 999)
 ### [Escape Hatch](https://hexdocs.pm/exceptional/Exceptional.Value.html)
 
 ```elixir
-[1,2,3] ~> Enum.sum
+[1,2,3] ~> Enum.sum()
 #=> 6
 
 Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 [1,2,3]
-|> hypothetical_returns_exception
-~> fn would_be_list ->
-  would_be_list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 end.()
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 0..10
 |> Enum.take(3)
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 end.()
 #=> 6
 ```
@@ -179,43 +175,35 @@ end)
 
 ```elixir
 [1,2,3]
-|> hypothetical_returns_exception
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 end.()
 #=>  {:error, "exception"}
 
 0..10
 |> Enum.take(3)
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum()
 end.()
-|> to_tagged_status
+|> to_tagged_status()
 #=> {:ok, 6}
 
 
 0..10
-|> hypothetical_returns_exception
-~> fn list ->
-  list
-  |> Enum.map(fn x -> x + 1 end)
-  |> Enum.sum
+|> hypothetical_returns_exception()
+~> Enum.map(fn x -> x + 1 end)
+~> Enum.sum
 end.()
-|> ok
+|> ok()
 #=>  {:error, "exception"}
 
 
 maybe_sum =
   0..10
-  |> hypothetical_returns_exception
-  ~> fn list ->
-    list
-    |> Enum.map(fn x -> x + 1 end)
-    |> Enum.sum
+  |> hypothetical_returns_exception()
+  ~> Enum.map(fn x -> x + 1 end)
+  ~> Enum.sum()
   end.()
 
 ~~~maybe_sum
@@ -229,10 +217,10 @@ Note that this does away with the need for separate `foo` and `foo!` functions,
 thanks to the inversion of control.
 
 ```elixir
-[1,2,3] >>> Enum.sum
+[1,2,3] >>> Enum.sum()
 #=> 6
 
-%ArgumentError{message: "raise me"} >>> Enum.sum
+%ArgumentError{message: "raise me"} >>> Enum.sum()
 #=> ** (ArgumentError) raise me
 
 ensure!([1, 2, 3])
