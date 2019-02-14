@@ -189,7 +189,7 @@ end)
 0..10
 |> hypothetical_returns_exception()
 ~> Enum.map(fn x -> x + 1 end)
-~> Enum.sum
+~> Enum.sum()
 |> ok()
 #=>  {:error, "exception"}
 
