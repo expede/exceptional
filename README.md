@@ -1,7 +1,15 @@
 # Exceptional: Helpers for Elixir exceptions
 ![](https://github.com/expede/exceptional/raw/master/branding/logo_with_text.png)
 
-[![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional) [![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional) [![Deps Status](https://beta.hexfaktor.org/badge/all/github/expede/exceptional.svg)](https://beta.hexfaktor.org/github/expede/exceptional) [![hex.pm version](https://img.shields.io/hexpm/v/exceptional.svg?style=flat)](https://hex.pm/packages/exceptional) [![API Docs](https://img.shields.io/badge/api-docs-yellow.svg?style=flat)](http://hexdocs.pm/exceptional/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/expede/exceptional/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/expede/exceptional.svg?branch=master)](https://travis-ci.org/expede/exceptional)
+[![Inline docs](http://inch-ci.org/github/expede/exceptional.svg?branch=master)](http://inch-ci.org/github/expede/exceptional)
+[![hex.pm version](https://img.shields.io/hexpm/v/exceptional.svg?style=flat)](https://hex.pm/packages/exceptional)
+[![API Docs](https://img.shields.io/badge/api-docs-MediumPurple.svg?style=flat)](http://hexdocs.pm/exceptional/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/expede/exceptional/blob/master/LICENSE)
+
+[![](https://opencollective.com/exceptional/tiers/backer.svg?avatarHeight=50)](https://opencollective.com/exceptional/contribute/tier/8074-backer)
+
+[![](https://opencollective.com/exceptional/tiers/sponsor.svg?avatarHeight=50)](https://opencollective.com/exceptional/contribute/tier/8075-sponsor)
 
 ## Table of Contents
 - [Installation](#installation)
@@ -25,7 +33,7 @@ Add `exceptional` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:exceptional, "~> 2.0"}]
+  [{:exceptional, "~> 2.1"}]
 end
 ```
 
