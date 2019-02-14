@@ -115,14 +115,12 @@ Enum.OutOfBoundsError.exception("exception") ~> Enum.sum
 |> hypothetical_returns_exception()
 ~> Enum.map(fn x -> x + 1 end)
 ~> Enum.sum()
-end.()
 #=> %Enum.OutOfBoundsError{message: "exception"}
 
 0..10
 |> Enum.take(3)
 ~> Enum.map(fn x -> x + 1 end)
 ~> Enum.sum()
-end.()
 #=> 6
 ```
 
@@ -178,14 +176,12 @@ end)
 |> hypothetical_returns_exception()
 ~> Enum.map(fn x -> x + 1 end)
 ~> Enum.sum()
-end.()
 #=>  {:error, "exception"}
 
 0..10
 |> Enum.take(3)
 ~> Enum.map(fn x -> x + 1 end)
 ~> Enum.sum()
-end.()
 |> to_tagged_status()
 #=> {:ok, 6}
 
@@ -194,7 +190,6 @@ end.()
 |> hypothetical_returns_exception()
 ~> Enum.map(fn x -> x + 1 end)
 ~> Enum.sum
-end.()
 |> ok()
 #=>  {:error, "exception"}
 
@@ -204,7 +199,6 @@ maybe_sum =
   |> hypothetical_returns_exception()
   ~> Enum.map(fn x -> x + 1 end)
   ~> Enum.sum()
-  end.()
 
 ~~~maybe_sum
 #=>  {:error, "exception"}
