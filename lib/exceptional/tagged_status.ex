@@ -62,7 +62,7 @@ defmodule Exceptional.TaggedStatus do
 
       value ->
         if Exception.exception?(value) do
-          {:error, value.message}
+          {:error, Exception.message(value)}
         else
           {:ok, value}
         end
