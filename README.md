@@ -30,7 +30,6 @@
 ## Installation
 
 Add `exceptional` to your list of dependencies in `mix.exs`:
-
 ```elixir
 def deps do
   [{:exceptional, "~> 2.1"}]
@@ -154,16 +153,16 @@ normalize({:good, "tuple", ["value"]})
 
 {:oh_no, {"something bad happened", %{bad: :thing}}}
 |> normalize(fn
-  {:oh_no, {message, _}} -> %File.Error{reason: message}) # This case
-  {:bang, message        -> %File.CopyError{reason: message})
+  {:oh_no, {message, _}} -> %File.Error{reason: message} # This case
+  {:bang, message}       -> %File.CopyError{reason: message}
   otherwise              -> otherwise
 end)
 #=> %File.Error{message: msg}
 
 {:oh_yes, {1, 2, 3}}
 |> normalize(fn
-  {:oh_no, {message, _}} -> %File.Error{reason: message})
-  {:bang, message        -> %File.CopyError{reason: message})
+  {:oh_no, {message, _}} -> %File.Error{reason: message}
+  {:bang, message}       -> %File.CopyError{reason: message}
   otherwise              -> otherwise # This case
 end)
 #=> {:oh_yes, {1, 2, 3}}
