@@ -80,7 +80,7 @@ This is a classic inversion of control, and allows for very flexible patterns.
 For example, using [`>>>`](#finally-raise) (ie: `raise` if exception, otherwise continue) sidesteps
 the need for separate bang functions.
 
-Just like the classic FP wisdom: if it doubt, pass it back to the caller to handle.
+Just like the classic FP wisdom: if in doubt, pass it back to the caller to handle.
 
 ## Examples
 
@@ -157,7 +157,7 @@ normalize({:good, "tuple", ["value"]})
   {:bang, message}       -> %File.CopyError{reason: message}
   otherwise              -> otherwise
 end)
-#=> %File.Error{message: msg}
+#=> %File.Error{action: "", path: nil, reason: "something bad happened"}
 
 {:oh_yes, {1, 2, 3}}
 |> normalize(fn
