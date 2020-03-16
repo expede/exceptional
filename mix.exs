@@ -28,7 +28,7 @@ defmodule Exceptional.Mixfile do
       deps: [
         {:credo,    "~> 1.0",  only: [:dev, :test]},
 
-        {:dialyxir, "~> 0.5",  only: :dev},
+        {:dialyxir, "~> 1.0",  only: :dev},
         {:earmark,  "~> 1.3",  only: :dev},
         {:ex_doc,   "~> 0.19", only: :dev},
 
