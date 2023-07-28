@@ -44,7 +44,7 @@ defmodule Exceptional.Control do
   defmacro branch(maybe_exception, [value_do: value_do, exception_do: exception_do]) do
     quote do
       maybe_exc = unquote(maybe_exception)
-      if Exception.exception?(maybe_exc) do
+      if Kernel.is_exception(maybe_exc) do
         maybe_exc |> unquote(exception_do)
       else
         maybe_exc |> unquote(value_do)
@@ -82,7 +82,7 @@ defmodule Exceptional.Control do
   defmacro if_exception(maybe_exception, do: exception_do, else: value_do) do
     quote do
       maybe_exc = unquote(maybe_exception)
-      if Exception.exception?(maybe_exc) do
+      if Kernel.is_exception(maybe_exc) do
         maybe_exc |> unquote(exception_do)
       else
         maybe_exc |> unquote(value_do)

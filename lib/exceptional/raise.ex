@@ -96,7 +96,7 @@ defmodule Exceptional.Raise do
 
   """
   def ensure!(maybe_exception) do
-    if Exception.exception?(maybe_exception) do
+    if Kernel.is_exception(maybe_exception) do
       raise maybe_exception
     else
       maybe_exception
