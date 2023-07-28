@@ -79,7 +79,7 @@ defmodule Exceptional.Normalize do
 
       plain = {error_type, status, stacktrace} ->
         err = Exception.normalize(error_type, status, stacktrace)
-        if Exception.exception?(err), do: err, else: plain
+        if Kernel.is_exception(err), do: err, else: plain
 
       {:ok, value} -> value
       value -> conversion_fun.(value)

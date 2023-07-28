@@ -61,7 +61,7 @@ defmodule Exceptional.TaggedStatus do
         end
 
       value ->
-        if Exception.exception?(value) do
+        if Kernel.is_exception(value) do
           {:error, Exception.message(value)}
         else
           {:ok, value}
